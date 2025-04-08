@@ -1,0 +1,26 @@
+* installing *source* package ‘httpgd’ ...
+** package ‘httpgd’ successfully unpacked and MD5 sums checked
+** using staged installation
+** libs
+using C++ compiler: ‘g++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0’
+rm -f httpgd.so cpp11.o httpgd.o httpgd_rng.o httpgd_webserver.o unigd_impl.o
+g++ -std=gnu++17 -I"/usr/share/R/include" -DNDEBUG -Ilib -DFMT_HEADER_ONLY -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/httpgd/unigd/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/httpgd/cpp11/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/AsioHeaders/old/AsioHeaders/include'     -fpic  -g -O2 -fno-omit-frame-pointer -ffile-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=. -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=/usr/src/r-base-4.4.3-1.2404.0 -Wdate-time -D_FORTIFY_SOURCE=3   -c cpp11.cpp -o cpp11.o
+g++ -std=gnu++17 -I"/usr/share/R/include" -DNDEBUG -Ilib -DFMT_HEADER_ONLY -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/httpgd/unigd/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/httpgd/cpp11/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/AsioHeaders/old/AsioHeaders/include'     -fpic  -g -O2 -fno-omit-frame-pointer -ffile-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=. -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=/usr/src/r-base-4.4.3-1.2404.0 -Wdate-time -D_FORTIFY_SOURCE=3   -c httpgd.cpp -o httpgd.o
+g++ -std=gnu++17 -I"/usr/share/R/include" -DNDEBUG -Ilib -DFMT_HEADER_ONLY -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/httpgd/unigd/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/httpgd/cpp11/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/AsioHeaders/old/AsioHeaders/include'     -fpic  -g -O2 -fno-omit-frame-pointer -ffile-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=. -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=/usr/src/r-base-4.4.3-1.2404.0 -Wdate-time -D_FORTIFY_SOURCE=3   -c httpgd_rng.cpp -o httpgd_rng.o
+g++ -std=gnu++17 -I"/usr/share/R/include" -DNDEBUG -Ilib -DFMT_HEADER_ONLY -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/httpgd/unigd/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/httpgd/cpp11/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/AsioHeaders/old/AsioHeaders/include'     -fpic  -g -O2 -fno-omit-frame-pointer -ffile-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=. -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=/usr/src/r-base-4.4.3-1.2404.0 -Wdate-time -D_FORTIFY_SOURCE=3   -c httpgd_webserver.cpp -o httpgd_webserver.o
+g++ -std=gnu++17 -I"/usr/share/R/include" -DNDEBUG -Ilib -DFMT_HEADER_ONLY -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/httpgd/unigd/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/httpgd/cpp11/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/AsioHeaders/old/AsioHeaders/include'     -fpic  -g -O2 -fno-omit-frame-pointer -ffile-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=. -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=/usr/src/r-base-4.4.3-1.2404.0 -Wdate-time -D_FORTIFY_SOURCE=3   -c unigd_impl.cpp -o unigd_impl.o
+g++ -std=gnu++17 -shared -L/usr/lib/R/lib -Wl,-Bsymbolic-functions -flto=auto -ffat-lto-objects -Wl,-z,relro -o httpgd.so cpp11.o httpgd.o httpgd_rng.o httpgd_webserver.o unigd_impl.o -L/usr/lib/R/lib -lR
+installing to /home/cg334/shikokuchuo/r/asioheaders/revdep/checks/httpgd/old/httpgd.Rcheck/00LOCK-httpgd/00new/httpgd/libs
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+*** copying figures
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** checking absolute paths in shared objects and dynamic libraries
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (httpgd)

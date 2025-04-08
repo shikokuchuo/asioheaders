@@ -1,0 +1,25 @@
+# Platform
+
+|field    |value                                 |
+|:--------|:-------------------------------------|
+|version  |R version 4.4.3 (2025-02-28)          |
+|os       |Ubuntu 24.04.2 LTS                    |
+|system   |x86_64, linux-gnu                     |
+|ui       |RStudio                               |
+|language |en_GB:en                              |
+|collate  |en_GB.UTF-8                           |
+|ctype    |en_GB.UTF-8                           |
+|tz       |Europe/London                         |
+|date     |2025-04-08                            |
+|rstudio  |2024.12.1+563 Kousa Dogwood (desktop) |
+|pandoc   |3.1.3 @ /usr/bin/pandoc               |
+|quarto   |1.6.40 @ /usr/local/bin/quarto        |
+
+# Dependencies
+
+|package     |old      |new        |Δ  |
+|:-----------|:--------|:----------|:--|
+|AsioHeaders |1.22.1-2 |1.22.1-2.2 |*  |
+
+# Revdeps
+

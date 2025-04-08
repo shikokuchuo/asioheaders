@@ -1,0 +1,1106 @@
+
+R version 4.4.3 (2025-02-28) -- "Trophy Case"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "ipaddress"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('ipaddress')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> base::assign(".old_wd", base::getwd(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("address_in_network")
+> ### * address_in_network
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: address_in_network
+> ### Title: Network membership of addresses
+> ### Aliases: address_in_network is_within is_within_any
+> 
+> ### ** Examples
+> 
+> is_within(ip_address("192.168.2.6"), ip_network("192.168.2.0/28"))
+[1] TRUE
+> 
+> is_within(ip_address("192.168.3.6"), ip_network("192.168.2.0/28"))
+[1] FALSE
+> 
+> is_within_any(ip_address("192.168.3.6"), ip_network(c("192.168.2.0/28", "192.168.3.0/28")))
+[1] TRUE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("collapse_networks")
+> ### * collapse_networks
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: collapse_networks
+> ### Title: Collapse contiguous and overlapping networks
+> ### Aliases: collapse_networks
+> 
+> ### ** Examples
+> 
+> collapse_networks(ip_network(c("192.168.0.0/24", "192.168.1.0/24")))
+<ip_network[1]>
+[1] 192.168.0.0/23
+> 
+> 
+> 
+> cleanEx()
+> nameEx("common_network")
+> ### * common_network
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: common_network
+> ### Title: Find the common network of two addresses
+> ### Aliases: common_network
+> 
+> ### ** Examples
+> 
+> # address range matches network boundaries
+> common_network(ip_address("192.168.0.0"), ip_address("192.168.0.15"))
+<ip_network[1]>
+[1] 192.168.0.0/28
+> 
+> # address range does not match network boundaries
+> common_network(ip_address("192.167.255.255"), ip_address("192.168.0.16"))
+<ip_network[1]>
+[1] 192.160.0.0/12
+> 
+> 
+> 
+> cleanEx()
+> nameEx("country_networks")
+> ### * country_networks
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: country_networks
+> ### Title: Country-level IP networks
+> ### Aliases: country_networks
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D country_networks(c("GB", "US"))
+> ##D 
+> ##D country_networks(c("GB", "US"), collapse = FALSE)
+> ##D 
+> ##D # retrieve networks for a single country
+> ##D country_networks("TO")$networks[[1]]
+> ##D 
+> ##D # expand networks for multiple countries
+> ##D tidyr::unchop(country_networks(c("GB", "US")), networks)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("exclude_networks")
+> ### * exclude_networks
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: exclude_networks
+> ### Title: Remove networks from others
+> ### Aliases: exclude_networks
+> 
+> ### ** Examples
+> 
+> exclude_networks(ip_network("192.0.2.0/28"), ip_network("192.0.2.1/32"))
+<ip_network[4]>
+[1] 192.0.2.0/32 192.0.2.2/31 192.0.2.4/30 192.0.2.8/29
+> 
+> exclude_networks(ip_network("192.0.2.0/28"), ip_network("192.0.2.15/32"))
+<ip_network[4]>
+[1] 192.0.2.0/29  192.0.2.8/30  192.0.2.12/31 192.0.2.14/32
+> 
+> 
+> 
+> cleanEx()
+> nameEx("iana_ipv4")
+> ### * iana_ipv4
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: iana_ipv4
+> ### Title: IPv4 address space allocation
+> ### Aliases: iana_ipv4
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> iana_ipv4
+        network allocation              label
+1     0.0.0.0/8   Reserved           Reserved
+2     1.0.0.0/8    Managed              APNIC
+3     2.0.0.0/8    Managed           RIPE NCC
+4     3.0.0.0/8    Managed Various registries
+5     4.0.0.0/8    Managed Various registries
+6     5.0.0.0/8    Managed           RIPE NCC
+7     6.0.0.0/8   Assigned             US DoD
+8     7.0.0.0/8    Managed Various registries
+9     8.0.0.0/7    Managed Various registries
+10   10.0.0.0/8   Reserved           Reserved
+11   11.0.0.0/8   Assigned             US DoD
+12   12.0.0.0/8   Assigned               AT&T
+13   13.0.0.0/8    Managed Various registries
+14   14.0.0.0/8    Managed              APNIC
+15   15.0.0.0/8    Managed Various registries
+16   16.0.0.0/8    Managed Various registries
+17   17.0.0.0/8   Assigned              Apple
+18   18.0.0.0/8    Managed Various registries
+19   19.0.0.0/8   Assigned               Ford
+20   20.0.0.0/8    Managed Various registries
+21   21.0.0.0/8   Assigned             US DoD
+22   22.0.0.0/8   Assigned             US DoD
+23   23.0.0.0/8    Managed               ARIN
+24   24.0.0.0/8    Managed               ARIN
+25   25.0.0.0/8    Managed Various registries
+26   26.0.0.0/8   Assigned             US DoD
+27   27.0.0.0/8    Managed              APNIC
+28   28.0.0.0/7   Assigned             US DoD
+29   30.0.0.0/8   Assigned             US DoD
+30   31.0.0.0/8    Managed           RIPE NCC
+31   32.0.0.0/8    Managed Various registries
+32   33.0.0.0/8   Assigned             US DoD
+33   34.0.0.0/7    Managed Various registries
+34   36.0.0.0/8    Managed              APNIC
+35   37.0.0.0/8    Managed           RIPE NCC
+36   38.0.0.0/8   Assigned             Cogent
+37   39.0.0.0/8    Managed              APNIC
+38   40.0.0.0/8    Managed Various registries
+39   41.0.0.0/8    Managed            AFRINIC
+40   42.0.0.0/8    Managed              APNIC
+41   43.0.0.0/8    Managed Various registries
+42   44.0.0.0/7    Managed Various registries
+43   46.0.0.0/8    Managed           RIPE NCC
+44   47.0.0.0/8    Managed Various registries
+45   48.0.0.0/8   Assigned         Prudential
+46   49.0.0.0/8    Managed              APNIC
+47   50.0.0.0/8    Managed               ARIN
+48   51.0.0.0/8    Managed Various registries
+49   52.0.0.0/8    Managed Various registries
+50   53.0.0.0/8   Assigned            Daimler
+51   54.0.0.0/8    Managed Various registries
+52   55.0.0.0/8   Assigned             US DoD
+53   56.0.0.0/7    Managed Various registries
+54   58.0.0.0/7    Managed              APNIC
+55   60.0.0.0/7    Managed              APNIC
+56   62.0.0.0/8    Managed           RIPE NCC
+57   63.0.0.0/8    Managed               ARIN
+58   64.0.0.0/5    Managed               ARIN
+59   72.0.0.0/6    Managed               ARIN
+60   76.0.0.0/8    Managed               ARIN
+61   77.0.0.0/8    Managed           RIPE NCC
+62   78.0.0.0/7    Managed           RIPE NCC
+63   80.0.0.0/4    Managed           RIPE NCC
+64   96.0.0.0/6    Managed               ARIN
+65  100.0.0.0/8    Managed               ARIN
+66  101.0.0.0/8    Managed              APNIC
+67  102.0.0.0/8    Managed            AFRINIC
+68  103.0.0.0/8    Managed              APNIC
+69  104.0.0.0/8    Managed               ARIN
+70  105.0.0.0/8    Managed            AFRINIC
+71  106.0.0.0/8    Managed              APNIC
+72  107.0.0.0/8    Managed               ARIN
+73  108.0.0.0/8    Managed               ARIN
+74  109.0.0.0/8    Managed           RIPE NCC
+75  110.0.0.0/7    Managed              APNIC
+76  112.0.0.0/5    Managed              APNIC
+77  120.0.0.0/6    Managed              APNIC
+78  124.0.0.0/7    Managed              APNIC
+79  126.0.0.0/8    Managed              APNIC
+80  127.0.0.0/8   Reserved           Reserved
+81  128.0.0.0/3    Managed Various registries
+82  160.0.0.0/5    Managed Various registries
+83  168.0.0.0/6    Managed Various registries
+84  172.0.0.0/8    Managed Various registries
+85  173.0.0.0/8    Managed               ARIN
+86  174.0.0.0/8    Managed               ARIN
+87  175.0.0.0/8    Managed              APNIC
+88  176.0.0.0/8    Managed           RIPE NCC
+89  177.0.0.0/8    Managed             LACNIC
+90  178.0.0.0/8    Managed           RIPE NCC
+91  179.0.0.0/8    Managed             LACNIC
+92  180.0.0.0/8    Managed              APNIC
+93  181.0.0.0/8    Managed             LACNIC
+94  182.0.0.0/7    Managed              APNIC
+95  184.0.0.0/8    Managed               ARIN
+96  185.0.0.0/8    Managed           RIPE NCC
+97  186.0.0.0/7    Managed             LACNIC
+98  188.0.0.0/8    Managed Various registries
+99  189.0.0.0/8    Managed             LACNIC
+100 190.0.0.0/8    Managed             LACNIC
+101 191.0.0.0/8    Managed Various registries
+102 192.0.0.0/8    Managed Various registries
+103 193.0.0.0/8    Managed           RIPE NCC
+104 194.0.0.0/7    Managed           RIPE NCC
+105 196.0.0.0/8    Managed Various registries
+106 197.0.0.0/8    Managed            AFRINIC
+107 198.0.0.0/8    Managed Various registries
+108 199.0.0.0/8    Managed               ARIN
+109 200.0.0.0/7    Managed             LACNIC
+110 202.0.0.0/7    Managed              APNIC
+111 204.0.0.0/6    Managed               ARIN
+112 208.0.0.0/7    Managed               ARIN
+113 210.0.0.0/7    Managed              APNIC
+114 212.0.0.0/7    Managed           RIPE NCC
+115 214.0.0.0/7   Assigned             US DoD
+116 216.0.0.0/8    Managed               ARIN
+117 217.0.0.0/8    Managed           RIPE NCC
+118 218.0.0.0/7    Managed              APNIC
+119 220.0.0.0/6    Managed              APNIC
+120 224.0.0.0/4   Reserved          Multicast
+121 240.0.0.0/4   Reserved           Reserved
+> 
+> 
+> 
+> cleanEx()
+> nameEx("iana_ipv6")
+> ### * iana_ipv6
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: iana_ipv6
+> ### Title: IPv6 address space allocation
+> ### Aliases: iana_ipv6
+> ### Keywords: datasets
+> 
+> ### ** Examples
+> 
+> iana_ipv6
+          network allocation                label
+1            ::/3   Reserved                 IETF
+2       2001::/23    Managed                 IANA
+3   2001:200::/23    Managed                APNIC
+4   2001:400::/23    Managed                 ARIN
+5   2001:600::/23    Managed             RIPE NCC
+6   2001:800::/22    Managed             RIPE NCC
+7   2001:c00::/22    Managed                APNIC
+8  2001:1200::/23    Managed               LACNIC
+9  2001:1400::/22    Managed             RIPE NCC
+10 2001:1800::/23    Managed                 ARIN
+11 2001:1a00::/23    Managed             RIPE NCC
+12 2001:1c00::/22    Managed             RIPE NCC
+13 2001:2000::/19    Managed             RIPE NCC
+14 2001:4000::/23    Managed             RIPE NCC
+15 2001:4200::/23    Managed              AFRINIC
+16 2001:4400::/23    Managed                APNIC
+17 2001:4600::/23    Managed             RIPE NCC
+18 2001:4800::/23    Managed                 ARIN
+19 2001:4a00::/23    Managed             RIPE NCC
+20 2001:4c00::/23    Managed             RIPE NCC
+21 2001:5000::/20    Managed             RIPE NCC
+22 2001:8000::/18    Managed                APNIC
+23      2002::/16    Managed                 6to4
+24      2003::/18    Managed             RIPE NCC
+25      2400::/12    Managed                APNIC
+26      2600::/12    Managed                 ARIN
+27      2610::/23    Managed                 ARIN
+28      2620::/23    Managed                 ARIN
+29      2630::/12    Managed                 ARIN
+30      2800::/12    Managed               LACNIC
+31      2a00::/11    Managed             RIPE NCC
+32      2c00::/12    Managed              AFRINIC
+33       2d00::/8   Reserved                 IANA
+34       2e00::/7   Reserved                 IANA
+35       3000::/4   Reserved                 IANA
+36       4000::/2   Reserved                 IETF
+37       5f00::/8   Reserved                 IANA
+38       8000::/2   Reserved                 IETF
+39       c000::/3   Reserved                 IETF
+40       e000::/4   Reserved                 IETF
+41       f000::/5   Reserved                 IETF
+42       f800::/6   Reserved                 IETF
+43       fc00::/7   Reserved Unique Local Unicast
+44       fe00::/9   Reserved                 IETF
+45      fe80::/10   Reserved  Link-Scoped Unicast
+46      fec0::/10   Reserved                 IETF
+47       ff00::/8   Reserved            Multicast
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ip_address")
+> ### * ip_address
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ip_address
+> ### Title: Vector of IP addresses
+> ### Aliases: ip_address
+> 
+> ### ** Examples
+> 
+> # supports IPv4 and IPv6 simultaneously
+> ip_address(c("192.168.0.1", "2001:db8::8a2e:370:7334"))
+<ip_address[2]>
+[1] 192.168.0.1             2001:db8::8a2e:370:7334
+> 
+> # validates inputs and replaces with NA
+> ip_address(c("255.255.255.256", "192.168.0.1/32"))
+Warning: Problem on row 1: 255.255.255.256
+Warning: Problem on row 2: 192.168.0.1/32
+<ip_address[2]>
+[1] <NA> <NA>
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ip_cast")
+> ### * ip_cast
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ip_cast
+> ### Title: Cast to IP vector
+> ### Aliases: ip_cast as_ip_address as_ip_interface as_ip_network
+> 
+> ### ** Examples
+> 
+> as_ip_address(ip_interface("192.168.0.1/10"))
+<ip_address[1]>
+[1] 192.168.0.1
+> 
+> as_ip_network(ip_interface("192.168.0.1/10"))
+<ip_network[1]>
+[1] 192.128.0.0/10
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ip_format")
+> ### * ip_format
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ip_format
+> ### Title: Format IP vector
+> ### Aliases: ip_format format.ip_address format.ip_interface
+> ###   format.ip_network
+> 
+> ### ** Examples
+> 
+> format(ip_address("2001:db8::8a2e:370:7334"))
+[1] "2001:db8::8a2e:370:7334"
+> 
+> format(ip_address("2001:db8::8a2e:370:7334"), exploded = TRUE)
+[1] "2001:0db8:0000:0000:0000:8a2e:0370:7334"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ip_interface")
+> ### * ip_interface
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ip_interface
+> ### Title: Vector of IP interfaces
+> ### Aliases: ip_interface ip_interface.default ip_interface.ip_address
+> 
+> ### ** Examples
+> 
+> # construct from character vector
+> ip_interface(c("192.168.0.1/10", "2001:db8:c3::abcd/45"))
+<ip_interface[2]>
+[1] 192.168.0.1/10       2001:db8:c3::abcd/45
+> 
+> # construct from address + prefix length objects
+> ip_interface(ip_address(c("192.168.0.1", "2001:db8:c3::abcd")), c(10L, 45L))
+<ip_interface[2]>
+[1] 192.168.0.1/10       2001:db8:c3::abcd/45
+> 
+> # extract IP address
+> x <- ip_interface(c("192.168.0.1/10", "2001:db8:c3::abcd/45"))
+> as_ip_address(x)
+<ip_address[2]>
+[1] 192.168.0.1       2001:db8:c3::abcd
+> 
+> # extract IP network (with host bits masked)
+> as_ip_network(x)
+<ip_network[2]>
+[1] 192.128.0.0/10   2001:db8:c0::/45
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ip_network")
+> ### * ip_network
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ip_network
+> ### Title: Vector of IP networks
+> ### Aliases: ip_network ip_network.default ip_network.ip_address
+> 
+> ### ** Examples
+> 
+> # construct from character vector
+> ip_network(c("192.168.0.0/24", "2001:db8::/48"))
+<ip_network[2]>
+[1] 192.168.0.0/24 2001:db8::/48 
+> 
+> # validates inputs and replaces with NA
+> ip_network(c("192.168.0.0/33", "192.168.0.0"))
+Warning: Problem on row 1: 192.168.0.0/33
+Warning: Problem on row 2: 192.168.0.0
+<ip_network[2]>
+[1] <NA> <NA>
+> 
+> # IP networks should not have any host bits set
+> ip_network("192.168.0.1/22")
+Warning: Problem on row 1: 192.168.0.1/22 (host bits set)
+<ip_network[1]>
+[1] <NA>
+> 
+> # but we can mask the host bits if desired
+> ip_network("192.168.0.1/22", strict = FALSE)
+<ip_network[1]>
+[1] 192.168.0.0/22
+> 
+> # construct from address + prefix length
+> ip_network(ip_address("192.168.0.0"), 24L)
+<ip_network[1]>
+[1] 192.168.0.0/24
+> 
+> # construct from address + netmask
+> ip_network(ip_address("192.168.0.0"), prefix_length(ip_address("255.255.255.0")))
+<ip_network[1]>
+[1] 192.168.0.0/24
+> 
+> # construct from address + hostmask
+> ip_network(ip_address("192.168.0.0"), prefix_length(ip_address("0.0.0.255")))
+<ip_network[1]>
+[1] 192.168.0.0/24
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ip_operators")
+> ### * ip_operators
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ip_operators
+> ### Title: Operators for IP addresses
+> ### Aliases: ip_operators %<<% %>>%
+> 
+> ### ** Examples
+> 
+> # use ip_to_binary() to understand these examples better
+> 
+> # bitwise NOT
+> !ip_address("192.168.0.1")
+<ip_address[1]>
+[1] 63.87.255.254
+> 
+> # bitwise AND
+> ip_address("192.168.0.1") & ip_address("255.0.0.255")
+<ip_address[1]>
+[1] 192.0.0.1
+> 
+> # bitwise OR
+> ip_address("192.168.0.0") | ip_address("255.0.0.255")
+<ip_address[1]>
+[1] 255.168.0.255
+> 
+> # bitwise XOR
+> ip_address("192.168.0.0") ^ ip_address("255.0.0.255")
+<ip_address[1]>
+[1] 63.168.0.255
+> 
+> # bitwise shift left
+> ip_address("192.168.0.1") %<<% 1
+<ip_address[1]>
+[1] 129.80.0.2
+> 
+> # bitwise shift right
+> ip_address("192.168.0.1") %>>% 1
+<ip_address[1]>
+[1] 96.84.0.0
+> 
+> # addition of integers
+> ip_address("192.168.0.1") + 10
+<ip_address[1]>
+[1] 192.168.0.11
+> 
+> # subtraction of integers
+> ip_address("192.168.0.1") - 10
+<ip_address[1]>
+[1] 192.167.255.247
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ip_test")
+> ### * ip_test
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ip_test
+> ### Title: Test for IP vector
+> ### Aliases: ip_test is_ip_address is_ip_interface is_ip_network
+> 
+> ### ** Examples
+> 
+> is_ip_address(ip_address("192.168.0.1"))
+[1] TRUE
+> is_ip_interface(ip_interface("192.168.0.1/10"))
+[1] TRUE
+> is_ip_network(ip_network("192.168.0.0/24"))
+[1] TRUE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ip_to_binary")
+> ### * ip_to_binary
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ip_to_binary
+> ### Title: Represent address as binary
+> ### Aliases: ip_to_binary binary_to_ip
+> 
+> ### ** Examples
+> 
+> x <- ip_address(c("192.168.0.1", "2001:db8::8a2e:370:7334", NA))
+> ip_to_binary(x)
+[1] "11000000101010000000000000000001"                                                                                                
+[2] "00100000000000010000110110111000000000000000000000000000000000000000000000000000100010100010111000000011011100000111001100110100"
+[3] NA                                                                                                                                
+> 
+> binary_to_ip(ip_to_binary(x))
+<ip_address[3]>
+[1] 192.168.0.1             2001:db8::8a2e:370:7334 <NA>                   
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ip_to_bytes")
+> ### * ip_to_bytes
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ip_to_bytes
+> ### Title: Represent address as raw bytes
+> ### Aliases: ip_to_bytes bytes_to_ip
+> 
+> ### ** Examples
+> 
+> x <- ip_address(c("192.168.0.1", "2001:db8::8a2e:370:7334", NA))
+> ip_to_bytes(x)
+[[1]]
+[1] c0 a8 00 01
+
+[[2]]
+ [1] 20 01 0d b8 00 00 00 00 00 00 8a 2e 03 70 73 34
+
+[[3]]
+NULL
+
+> 
+> bytes <- list(
++   as.raw(c(0xc0, 0xa8, 0x00, 0x01)),
++   as.raw(c(
++     0x20, 0x01, 0x0d, 0xb8, 0x00, 0x00, 0x00, 0x00,
++     0x00, 0x00, 0x8a, 0x2e, 0x03, 0x70, 0x73, 0x34
++   )),
++   NULL
++ )
+> bytes_to_ip(bytes)
+<ip_address[3]>
+[1] 192.168.0.1             2001:db8::8a2e:370:7334 <NA>                   
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ip_to_hex")
+> ### * ip_to_hex
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ip_to_hex
+> ### Title: Represent address as hexadecimal
+> ### Aliases: ip_to_hex hex_to_ip
+> 
+> ### ** Examples
+> 
+> x <- ip_address(c("192.168.0.1", "2001:db8::8a2e:370:7334", NA))
+> ip_to_hex(x)
+[1] "0xC0A80001"                         "0x20010DB80000000000008A2E03707334"
+[3] NA                                  
+> 
+> hex_to_ip(ip_to_hex(x))
+<ip_address[3]>
+[1] 192.168.0.1             2001:db8::8a2e:370:7334 <NA>                   
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ip_to_hostname")
+> ### * ip_to_hostname
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ip_to_hostname
+> ### Title: Translate address to/from hostname
+> ### Aliases: ip_to_hostname ip_to_hostname_all hostname_to_ip
+> ###   hostname_to_ip_all
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D hostname_to_ip("r-project.org")
+> ##D 
+> ##D ip_to_hostname(hostname_to_ip("r-project.org"))
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ip_to_integer")
+> ### * ip_to_integer
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ip_to_integer
+> ### Title: Represent address as integer
+> ### Aliases: ip_to_integer integer_to_ip
+> 
+> ### ** Examples
+> 
+> x <- ip_address(c("192.168.0.1", "2001:db8::8a2e:370:7334", NA))
+> ip_to_integer(x)
+<biginteger[3]>
+[1] 3.232236e+09 4.254077e+37 <NA>        
+> 
+> integer_to_ip(ip_to_integer(x))
+<ip_address[3]>
+[1] 192.168.0.1             2001:db8::8a2e:370:7334 <NA>                   
+> 
+> # with IPv4 only, we can use numeric data type
+> as.numeric(ip_to_integer(ip_address("192.168.0.1")))
+[1] 3232235521
+> 
+> integer_to_ip(3232235521)
+<ip_address[1]>
+[1] 192.168.0.1
+> 
+> 
+> 
+> cleanEx()
+> nameEx("ipv6-transition")
+> ### * ipv6-transition
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: ipv6-transition
+> ### Title: IPv6 transition mechanisms
+> ### Aliases: ipv6-transition is_ipv4_mapped is_6to4 is_teredo
+> ###   extract_ipv4_mapped extract_6to4 extract_teredo_server
+> ###   extract_teredo_client
+> 
+> ### ** Examples
+> 
+> # these examples show the reserved networks
+> is_ipv4_mapped(ip_network("::ffff:0.0.0.0/96"))
+[1] TRUE
+> 
+> is_6to4(ip_network("2002::/16"))
+[1] TRUE
+> 
+> is_teredo(ip_network("2001::/32"))
+[1] TRUE
+> 
+> # these examples show embedded IPv4 addresses
+> extract_ipv4_mapped(ip_address("::ffff:192.168.0.1"))
+<ip_address[1]>
+[1] 192.168.0.1
+> 
+> extract_6to4(ip_address("2002:c000:0204::"))
+<ip_address[1]>
+[1] 192.0.2.4
+> 
+> extract_teredo_server(ip_address("2001:0000:4136:e378:8000:63bf:3fff:fdd2"))
+<ip_address[1]>
+[1] 65.54.227.120
+> 
+> extract_teredo_client(ip_address("2001:0000:4136:e378:8000:63bf:3fff:fdd2"))
+<ip_address[1]>
+[1] 192.0.2.45
+> 
+> 
+> 
+> cleanEx()
+> nameEx("is_ipv6")
+> ### * is_ipv6
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: is_ipv6
+> ### Title: Version of the address space
+> ### Aliases: is_ipv6 is_ipv4
+> 
+> ### ** Examples
+> 
+> ip <- ip_address(c("192.168.0.1", "2001:db8::7334"))
+> 
+> is_ipv4(ip)
+[1]  TRUE FALSE
+> 
+> is_ipv6(ip)
+[1] FALSE  TRUE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("is_reserved")
+> ### * is_reserved
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: is_reserved
+> ### Title: Reserved addresses
+> ### Aliases: is_reserved is_private is_global is_multicast is_unspecified
+> ###   is_loopback is_link_local is_site_local
+> 
+> ### ** Examples
+> 
+> is_private(ip_network(c("192.168.0.0/16", "2001:db8::/32")))
+[1] TRUE TRUE
+> 
+> is_global(ip_network(c("1.0.0.0/8", "2002::/32")))
+[1] TRUE TRUE
+> 
+> is_multicast(ip_network(c("224.0.0.0/4", "ff00::/8")))
+[1] TRUE TRUE
+> 
+> is_unspecified(ip_network(c("0.0.0.0/32", "::/128")))
+[1] TRUE TRUE
+> 
+> is_reserved(ip_network(c("240.0.0.0/4", "f000::/5")))
+[1] TRUE TRUE
+> 
+> is_loopback(ip_network(c("127.0.0.0/8", "::1/128")))
+[1] TRUE TRUE
+> 
+> is_link_local(ip_network(c("169.254.0.0/16", "fe80::/10")))
+[1] TRUE TRUE
+> 
+> is_site_local(ip_network("fec0::/10"))
+[1] TRUE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("max_prefix_length")
+> ### * max_prefix_length
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: max_prefix_length
+> ### Title: Size of the address space
+> ### Aliases: max_prefix_length
+> 
+> ### ** Examples
+> 
+> x <- ip_address(c("192.168.0.1", "2001:db8::7334"))
+> 
+> max_prefix_length(x)
+[1]  32 128
+> 
+> 
+> 
+> cleanEx()
+> nameEx("netmask")
+> ### * netmask
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: netmask
+> ### Title: Network mask
+> ### Aliases: netmask prefix_length netmask.numeric hostmask
+> ###   hostmask.numeric
+> 
+> ### ** Examples
+> 
+> x <- ip_network(c("192.168.0.0/22", "2001:db00::0/26"))
+> 
+> prefix_length(x)
+[1] 22 26
+> 
+> netmask(x)
+<ip_address[2]>
+[1] 255.255.252.0 ffff:ffc0::  
+> 
+> hostmask(x)
+<ip_address[2]>
+[1] 0.0.3.255                          0:3f:ffff:ffff:ffff:ffff:ffff:ffff
+> 
+> # construct netmask/hostmask from prefix length
+> netmask(c(22L, 26L), c(FALSE, TRUE))
+<ip_address[2]>
+[1] 255.255.252.0 ffff:ffc0::  
+> 
+> hostmask(c(22L, 26L), c(FALSE, TRUE))
+<ip_address[2]>
+[1] 0.0.3.255                          0:3f:ffff:ffff:ffff:ffff:ffff:ffff
+> 
+> # extract prefix length from netmask/hostmask
+> prefix_length(ip_address(c("255.255.255.0", "0.255.255.255")))
+[1] 24  8
+> 
+> # invalid netmask/hostmask raise a warning and return NA
+> prefix_length(ip_address("255.255.255.1"))
+Warning: Problem on row 1: 255.255.255.1 (invalid netmask/hostmask)
+[1] NA
+> 
+> 
+> 
+> cleanEx()
+> nameEx("network_in_network")
+> ### * network_in_network
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: network_in_network
+> ### Title: Network membership of other networks
+> ### Aliases: network_in_network is_supernet is_subnet overlaps
+> 
+> ### ** Examples
+> 
+> net1 <- ip_network("192.168.1.128/30")
+> net2 <- ip_network("192.168.1.0/24")
+> 
+> is_supernet(net1, net2)
+[1] FALSE
+> 
+> is_subnet(net1, net2)
+[1] TRUE
+> 
+> overlaps(net1, net2)
+[1] TRUE
+> 
+> 
+> 
+> cleanEx()
+> nameEx("network_size")
+> ### * network_size
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: network_size
+> ### Title: Network size
+> ### Aliases: network_size network_address broadcast_address num_addresses
+> 
+> ### ** Examples
+> 
+> x <- ip_network(c("192.168.0.0/22", "2001:db8::/33"))
+> 
+> network_address(x)
+<ip_address[2]>
+[1] 192.168.0.0 2001:db8:: 
+> 
+> broadcast_address(x)
+<ip_address[2]>
+[1] 192.168.3.255                         
+[2] 2001:db8:7fff:ffff:ffff:ffff:ffff:ffff
+> 
+> num_addresses(x)
+[1] 1.024000e+03 3.961408e+28
+> 
+> 
+> 
+> cleanEx()
+> nameEx("reverse_pointer")
+> ### * reverse_pointer
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: reverse_pointer
+> ### Title: Reverse DNS pointer
+> ### Aliases: reverse_pointer
+> 
+> ### ** Examples
+> 
+> reverse_pointer(ip_address("127.0.0.1"))
+[1] "1.0.0.127.in-addr.arpa"
+> 
+> reverse_pointer(ip_address("2001:db8::1"))
+[1] "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip.arpa"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("sample")
+> ### * sample
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: sample
+> ### Title: Sample random addresses
+> ### Aliases: sample sample_ipv4 sample_ipv6 sample_network
+> 
+> ### ** Examples
+> 
+> sample_ipv4(5)
+<ip_address[5]>
+[1] 127.52.229.67   183.45.241.95   253.175.169.146 97.98.161.232  
+[5] 199.197.15.51  
+> 
+> sample_ipv6(5)
+<ip_address[5]>
+[1] cc3d:336f:e456:42e9:197a:cad2:ab7b:62ef
+[2] 740f:b6b6:ddd6:7a4b:50dc:5a5:cb99:336  
+[3] 68a4:1f66:6358:c475:8470:7ac8:1b7e:61a6
+[4] cfe0:3e53:c655:1555:a93e:bb8d:b92f:de20
+[5] 9ac7:24c1:f579:e0a6:6812:b187:69d3:5744
+> 
+> sample_network(ip_network("192.168.0.0/16"), 5)
+<ip_address[5]>
+[1] 192.168.54.167  192.168.33.90   192.168.122.69  192.168.236.254
+[5] 192.168.153.162
+> 
+> sample_network(ip_network("2001:db8::/48"), 5)
+<ip_address[5]>
+[1] 2001:db8:0:2e9d:73ae:9993:74fd:3f9  2001:db8:0:878e:2c99:8f13:827e:b7bb
+[3] 2001:db8:0:1354:bf3d:8609:357b:1a5b 2001:db8:0:4774:1a42:fca4:3a2c:726e
+[5] 2001:db8:0:3680:ddba:81ed:98c1:a325
+> 
+> 
+> 
+> cleanEx()
+> nameEx("sequence")
+> ### * sequence
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: sequence
+> ### Title: List addresses within a network
+> ### Aliases: sequence seq.ip_network hosts
+> 
+> ### ** Examples
+> 
+> seq(ip_network("192.168.0.0/30"))
+<ip_address[4]>
+[1] 192.168.0.0 192.168.0.1 192.168.0.2 192.168.0.3
+> 
+> seq(ip_network("2001:db8::/126"))
+<ip_address[4]>
+[1] 2001:db8::  2001:db8::1 2001:db8::2 2001:db8::3
+> 
+> hosts(ip_network("192.168.0.0/30"))
+<ip_address[2]>
+[1] 192.168.0.1 192.168.0.2
+> 
+> hosts(ip_network("2001:db8::/126"))
+<ip_address[3]>
+[1] 2001:db8::1 2001:db8::2 2001:db8::3
+> 
+> 
+> 
+> cleanEx()
+> nameEx("summarize_address_range")
+> ### * summarize_address_range
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: summarize_address_range
+> ### Title: List constituent networks of an address range
+> ### Aliases: summarize_address_range
+> 
+> ### ** Examples
+> 
+> # address range matches network boundaries
+> summarize_address_range(ip_address("192.168.0.0"), ip_address("192.168.0.15"))
+<list_of<ip_network>[1]>
+[[1]]
+<ip_network[1]>
+[1] 192.168.0.0/28
+
+> 
+> # address range does not match network boundaries
+> summarize_address_range(ip_address("192.167.255.255"), ip_address("192.168.0.16"))
+<list_of<ip_network>[1]>
+[[1]]
+<ip_network[3]>
+[1] 192.167.255.255/32 192.168.0.0/28     192.168.0.16/32   
+
+> 
+> 
+> 
+> cleanEx()
+> nameEx("traverse_hierarchy")
+> ### * traverse_hierarchy
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: traverse_hierarchy
+> ### Title: Traverse the network hierarchy
+> ### Aliases: traverse_hierarchy supernet subnets
+> 
+> ### ** Examples
+> 
+> supernet(ip_network("192.168.0.0/24"))
+<ip_network[1]>
+[1] 192.168.0.0/23
+> 
+> supernet(ip_network("192.168.0.0/24"), new_prefix = 10L)
+<ip_network[1]>
+[1] 192.128.0.0/10
+> 
+> subnets(ip_network("192.168.0.0/24"))
+<list_of<ip_network>[1]>
+[[1]]
+<ip_network[2]>
+[1] 192.168.0.0/25   192.168.0.128/25
+
+> 
+> subnets(ip_network("192.168.0.0/24"), new_prefix = 27L)
+<list_of<ip_network>[1]>
+[[1]]
+<ip_network[8]>
+[1] 192.168.0.0/27   192.168.0.32/27  192.168.0.64/27  192.168.0.96/27 
+[5] 192.168.0.128/27 192.168.0.160/27 192.168.0.192/27 192.168.0.224/27
+
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> cleanEx()
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  0.344 0.007 0.352 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

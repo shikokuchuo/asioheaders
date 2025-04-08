@@ -1,0 +1,28 @@
+* installing *source* package ‘websocket’ ...
+** package ‘websocket’ successfully unpacked and MD5 sums checked
+** using staged installation
+Found pkg-config cflags and libs!
+Using PKG_CFLAGS=
+Using PKG_LIBS=-lssl -lcrypto 
+** libs
+using C++ compiler: ‘g++ (Ubuntu 13.3.0-6ubuntu2~24.04) 13.3.0’
+g++ -std=gnu++17 -I"/usr/share/R/include" -DNDEBUG -I./lib  -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/websocket/cpp11/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/AsioHeaders/new/AsioHeaders/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/websocket/later/include'     -fpic  -g -O2 -fno-omit-frame-pointer -ffile-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=. -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=/usr/src/r-base-4.4.3-1.2404.0 -Wdate-time -D_FORTIFY_SOURCE=3   -c cpp11.cpp -o cpp11.o
+g++ -std=gnu++17 -I"/usr/share/R/include" -DNDEBUG -I./lib  -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/websocket/cpp11/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/AsioHeaders/new/AsioHeaders/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/websocket/later/include'     -fpic  -g -O2 -fno-omit-frame-pointer -ffile-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=. -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=/usr/src/r-base-4.4.3-1.2404.0 -Wdate-time -D_FORTIFY_SOURCE=3   -c debug.cpp -o debug.o
+g++ -std=gnu++17 -I"/usr/share/R/include" -DNDEBUG -I./lib  -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/websocket/cpp11/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/AsioHeaders/new/AsioHeaders/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/websocket/later/include'     -fpic  -g -O2 -fno-omit-frame-pointer -ffile-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=. -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=/usr/src/r-base-4.4.3-1.2404.0 -Wdate-time -D_FORTIFY_SOURCE=3   -c websocket.cpp -o websocket.o
+g++ -std=gnu++17 -I"/usr/share/R/include" -DNDEBUG -I./lib  -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/websocket/cpp11/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/AsioHeaders/new/AsioHeaders/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/websocket/later/include'     -fpic  -g -O2 -fno-omit-frame-pointer -ffile-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=. -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=/usr/src/r-base-4.4.3-1.2404.0 -Wdate-time -D_FORTIFY_SOURCE=3   -c websocket_connection.cpp -o websocket_connection.o
+g++ -std=gnu++17 -I"/usr/share/R/include" -DNDEBUG -I./lib  -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/websocket/cpp11/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/AsioHeaders/new/AsioHeaders/include' -I'/home/cg334/shikokuchuo/r/asioheaders/revdep/library/websocket/later/include'     -fpic  -g -O2 -fno-omit-frame-pointer -ffile-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=. -fstack-protector-strong -fstack-clash-protection -Wformat -Werror=format-security -fcf-protection -fdebug-prefix-map=/build/r-base-fxpJxi/r-base-4.4.3=/usr/src/r-base-4.4.3-1.2404.0 -Wdate-time -D_FORTIFY_SOURCE=3   -c websocket_task.cpp -o websocket_task.o
+g++ -std=gnu++17 -shared -L/usr/lib/R/lib -Wl,-Bsymbolic-functions -flto=auto -ffat-lto-objects -Wl,-z,relro -o websocket.so cpp11.o debug.o websocket.o websocket_connection.o websocket_task.o -lssl -lcrypto -L/usr/lib/R/lib -lR
+installing to /home/cg334/shikokuchuo/r/asioheaders/revdep/checks/websocket/new/websocket.Rcheck/00LOCK-websocket/00new/websocket/libs
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+** help
+*** installing help indices
+*** copying figures
+** building package indices
+** installing vignettes
+** testing if installed package can be loaded from temporary location
+** checking absolute paths in shared objects and dynamic libraries
+** testing if installed package can be loaded from final location
+** testing if installed package keeps a record of temporary installation path
+* DONE (websocket)

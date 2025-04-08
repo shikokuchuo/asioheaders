@@ -1,0 +1,49 @@
+
+R version 4.4.3 (2025-02-28) -- "Trophy Case"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(ipaddress)
+> 
+> test_check("ipaddress")
+[ FAIL 0 | WARN 1 | SKIP 42 | PASS 598 ]
+
+══ Skipped tests (42) ══════════════════════════════════════════════════════════
+• On CRAN (42): 'test-address_ranges.R:133:3', 'test-common_network.R:48:3',
+  'test-country_networks.R:20:3', 'test-country_networks.R:29:3',
+  'test-ip_interface.R:60:3', 'test-ip_network_v4.R:57:3',
+  'test-ip_network_v4.R:65:3', 'test-ip_network_v6.R:40:3',
+  'test-ip_network_v6.R:48:3', 'test-ip_to_binary.R:4:3',
+  'test-ip_to_bytes.R:9:3', 'test-ip_to_bytes.R:18:3', 'test-ip_to_hex.R:4:3',
+  'test-ip_to_hostname.R:2:3', 'test-ip_to_integer.R:6:3',
+  'test-ip_version.R:16:3', 'test-ipv6_transition.R:18:3',
+  'test-ipv6_transition.R:45:3', 'test-ipv6_transition.R:78:3',
+  'test-network_mask.R:79:3', 'test-network_size.R:6:3',
+  'test-network_size.R:16:3', 'test-network_size.R:25:3',
+  'test-operators.R:152:3', 'test-pillar.R:10:3', 'test-pillar.R:18:3',
+  'test-reserved.R:29:3', 'test-reserved.R:47:3', 'test-reserved.R:62:3',
+  'test-reserved.R:77:3', 'test-reserved.R:99:3', 'test-reserved.R:114:3',
+  'test-reserved.R:129:3', 'test-reserved.R:145:3',
+  'test-reverse_pointer.R:8:3', 'test-sample.R:5:3', 'test-sequence.R:2:3',
+  'test-traverse_hierarchy.R:8:3', 'test-traverse_hierarchy.R:41:3',
+  'test-traverse_hierarchy.R:65:3', 'test-traverse_hierarchy.R:76:3',
+  'test-within_network.R:2:3'
+
+[ FAIL 0 | WARN 1 | SKIP 42 | PASS 598 ]
+> 
+> proc.time()
+   user  system elapsed 
+  6.960   0.227  10.650 

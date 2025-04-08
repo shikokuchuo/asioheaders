@@ -1,0 +1,32 @@
+
+R version 4.4.3 (2025-02-28) -- "Trophy Case"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(httpgd)
+> 
+> test_check("httpgd")
+scontrol: error: resolve_ctls_from_dns_srv: res_nsearch error: Unknown host
+scontrol: error: fetch_config: DNS SRV lookup failed
+scontrol: error: _establish_config_source: failed to fetch config
+scontrol: fatal: Could not establish a configuration source
+[ FAIL 0 | WARN 1 | SKIP 0 | PASS 28 ]
+
+[ FAIL 0 | WARN 1 | SKIP 0 | PASS 28 ]
+> 
+> proc.time()
+   user  system elapsed 
+  5.963   0.253  22.737 
