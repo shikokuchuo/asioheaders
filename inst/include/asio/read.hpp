@@ -2,7 +2,7 @@
 // read.hpp
 // ~~~~~~~~
 //
-// Copyright (c) 2003-2022 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+// Copyright (c) 2003-2024 Christopher M. Kohlhoff (chris at kohlhoff dot com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -19,6 +19,7 @@
 #include <cstddef>
 #include "asio/async_result.hpp"
 #include "asio/buffer.hpp"
+#include "asio/completion_condition.hpp"
 #include "asio/error.hpp"
 
 #if !defined(ASIO_NO_EXTENSIONS)
@@ -28,6 +29,15 @@
 #include "asio/detail/push_options.hpp"
 
 namespace asio {
+namespace detail {
+
+template <typename> class initiate_async_read;
+#if !defined(ASIO_NO_DYNAMIC_BUFFER_V1)
+template <typename> class initiate_async_read_dynbuf_v1;
+#endif // !defined(ASIO_NO_DYNAMIC_BUFFER_V1)
+template <typename> class initiate_async_read_dynbuf_v2;
+
+} // namespace detail
 
 /**
  * @defgroup read asio::read
@@ -75,9 +85,9 @@ namespace asio {
  */
 template <typename SyncReadStream, typename MutableBufferSequence>
 std::size_t read(SyncReadStream& s, const MutableBufferSequence& buffers,
-    typename constraint<
+    constraint_t<
       is_mutable_buffer_sequence<MutableBufferSequence>::value
-    >::type = 0);
+    > = 0);
 
 /// Attempt to read a certain amount of data from a stream before returning.
 /**
@@ -118,9 +128,9 @@ std::size_t read(SyncReadStream& s, const MutableBufferSequence& buffers,
 template <typename SyncReadStream, typename MutableBufferSequence>
 std::size_t read(SyncReadStream& s, const MutableBufferSequence& buffers,
     asio::error_code& ec,
-    typename constraint<
+    constraint_t<
       is_mutable_buffer_sequence<MutableBufferSequence>::value
-    >::type = 0);
+    > = 0);
 
 /// Attempt to read a certain amount of data from a stream before returning.
 /**
@@ -172,9 +182,9 @@ template <typename SyncReadStream, typename MutableBufferSequence,
   typename CompletionCondition>
 std::size_t read(SyncReadStream& s, const MutableBufferSequence& buffers,
     CompletionCondition completion_condition,
-    typename constraint<
+    constraint_t<
       is_mutable_buffer_sequence<MutableBufferSequence>::value
-    >::type = 0);
+    > = 0);
 
 /// Attempt to read a certain amount of data from a stream before returning.
 /**
@@ -219,9 +229,9 @@ template <typename SyncReadStream, typename MutableBufferSequence,
     typename CompletionCondition>
 std::size_t read(SyncReadStream& s, const MutableBufferSequence& buffers,
     CompletionCondition completion_condition, asio::error_code& ec,
-    typename constraint<
+    constraint_t<
       is_mutable_buffer_sequence<MutableBufferSequence>::value
-    >::type = 0);
+    > = 0);
 
 #if !defined(ASIO_NO_DYNAMIC_BUFFER_V1)
 
@@ -254,13 +264,13 @@ std::size_t read(SyncReadStream& s, const MutableBufferSequence& buffers,
  */
 template <typename SyncReadStream, typename DynamicBuffer_v1>
 std::size_t read(SyncReadStream& s,
-    ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
-    typename constraint<
-      is_dynamic_buffer_v1<typename decay<DynamicBuffer_v1>::type>::value
-    >::type = 0,
-    typename constraint<
-      !is_dynamic_buffer_v2<typename decay<DynamicBuffer_v1>::type>::value
-    >::type = 0);
+    DynamicBuffer_v1&& buffers,
+    constraint_t<
+      is_dynamic_buffer_v1<decay_t<DynamicBuffer_v1>>::value
+    > = 0,
+    constraint_t<
+      !is_dynamic_buffer_v2<decay_t<DynamicBuffer_v1>>::value
+    > = 0);
 
 /// Attempt to read a certain amount of data from a stream before returning.
 /**
@@ -290,14 +300,14 @@ std::size_t read(SyncReadStream& s,
  */
 template <typename SyncReadStream, typename DynamicBuffer_v1>
 std::size_t read(SyncReadStream& s,
-    ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
+    DynamicBuffer_v1&& buffers,
     asio::error_code& ec,
-    typename constraint<
-      is_dynamic_buffer_v1<typename decay<DynamicBuffer_v1>::type>::value
-    >::type = 0,
-    typename constraint<
-      !is_dynamic_buffer_v2<typename decay<DynamicBuffer_v1>::type>::value
-    >::type = 0);
+    constraint_t<
+      is_dynamic_buffer_v1<decay_t<DynamicBuffer_v1>>::value
+    > = 0,
+    constraint_t<
+      !is_dynamic_buffer_v2<decay_t<DynamicBuffer_v1>>::value
+    > = 0);
 
 /// Attempt to read a certain amount of data from a stream before returning.
 /**
@@ -338,14 +348,14 @@ std::size_t read(SyncReadStream& s,
 template <typename SyncReadStream, typename DynamicBuffer_v1,
     typename CompletionCondition>
 std::size_t read(SyncReadStream& s,
-    ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
+    DynamicBuffer_v1&& buffers,
     CompletionCondition completion_condition,
-    typename constraint<
-      is_dynamic_buffer_v1<typename decay<DynamicBuffer_v1>::type>::value
-    >::type = 0,
-    typename constraint<
-      !is_dynamic_buffer_v2<typename decay<DynamicBuffer_v1>::type>::value
-    >::type = 0);
+    constraint_t<
+      is_dynamic_buffer_v1<decay_t<DynamicBuffer_v1>>::value
+    > = 0,
+    constraint_t<
+      !is_dynamic_buffer_v2<decay_t<DynamicBuffer_v1>>::value
+    > = 0);
 
 /// Attempt to read a certain amount of data from a stream before returning.
 /**
@@ -387,14 +397,14 @@ std::size_t read(SyncReadStream& s,
 template <typename SyncReadStream, typename DynamicBuffer_v1,
     typename CompletionCondition>
 std::size_t read(SyncReadStream& s,
-    ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
+    DynamicBuffer_v1&& buffers,
     CompletionCondition completion_condition, asio::error_code& ec,
-    typename constraint<
-      is_dynamic_buffer_v1<typename decay<DynamicBuffer_v1>::type>::value
-    >::type = 0,
-    typename constraint<
-      !is_dynamic_buffer_v2<typename decay<DynamicBuffer_v1>::type>::value
-    >::type = 0);
+    constraint_t<
+      is_dynamic_buffer_v1<decay_t<DynamicBuffer_v1>>::value
+    > = 0,
+    constraint_t<
+      !is_dynamic_buffer_v2<decay_t<DynamicBuffer_v1>>::value
+    > = 0);
 
 #if !defined(ASIO_NO_EXTENSIONS)
 #if !defined(ASIO_NO_IOSTREAM)
@@ -572,9 +582,9 @@ std::size_t read(SyncReadStream& s, basic_streambuf<Allocator>& b,
  */
 template <typename SyncReadStream, typename DynamicBuffer_v2>
 std::size_t read(SyncReadStream& s, DynamicBuffer_v2 buffers,
-    typename constraint<
+    constraint_t<
       is_dynamic_buffer_v2<DynamicBuffer_v2>::value
-    >::type = 0);
+    > = 0);
 
 /// Attempt to read a certain amount of data from a stream before returning.
 /**
@@ -605,9 +615,9 @@ std::size_t read(SyncReadStream& s, DynamicBuffer_v2 buffers,
 template <typename SyncReadStream, typename DynamicBuffer_v2>
 std::size_t read(SyncReadStream& s, DynamicBuffer_v2 buffers,
     asio::error_code& ec,
-    typename constraint<
+    constraint_t<
       is_dynamic_buffer_v2<DynamicBuffer_v2>::value
-    >::type = 0);
+    > = 0);
 
 /// Attempt to read a certain amount of data from a stream before returning.
 /**
@@ -649,9 +659,9 @@ template <typename SyncReadStream, typename DynamicBuffer_v2,
     typename CompletionCondition>
 std::size_t read(SyncReadStream& s, DynamicBuffer_v2 buffers,
     CompletionCondition completion_condition,
-    typename constraint<
+    constraint_t<
       is_dynamic_buffer_v2<DynamicBuffer_v2>::value
-    >::type = 0);
+    > = 0);
 
 /// Attempt to read a certain amount of data from a stream before returning.
 /**
@@ -694,9 +704,9 @@ template <typename SyncReadStream, typename DynamicBuffer_v2,
     typename CompletionCondition>
 std::size_t read(SyncReadStream& s, DynamicBuffer_v2 buffers,
     CompletionCondition completion_condition, asio::error_code& ec,
-    typename constraint<
+    constraint_t<
       is_dynamic_buffer_v2<DynamicBuffer_v2>::value
-    >::type = 0);
+    > = 0);
 
 /*@}*/
 /**
@@ -785,18 +795,19 @@ std::size_t read(SyncReadStream& s, DynamicBuffer_v2 buffers,
  */
 template <typename AsyncReadStream, typename MutableBufferSequence,
     ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
-      std::size_t)) ReadToken
-        ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
-          typename AsyncReadStream::executor_type)>
-ASIO_INITFN_AUTO_RESULT_TYPE(ReadToken,
-    void (asio::error_code, std::size_t))
-async_read(AsyncReadStream& s, const MutableBufferSequence& buffers,
-    ASIO_MOVE_ARG(ReadToken) token
-      ASIO_DEFAULT_COMPLETION_TOKEN(
-        typename AsyncReadStream::executor_type),
-    typename constraint<
+      std::size_t)) ReadToken = default_completion_token_t<
+        typename AsyncReadStream::executor_type>>
+auto async_read(AsyncReadStream& s, const MutableBufferSequence& buffers,
+    ReadToken&& token = default_completion_token_t<
+      typename AsyncReadStream::executor_type>(),
+    constraint_t<
       is_mutable_buffer_sequence<MutableBufferSequence>::value
-    >::type = 0);
+    > = 0)
+  -> decltype(
+    async_initiate<ReadToken,
+      void (asio::error_code, std::size_t)>(
+        declval<detail::initiate_async_read<AsyncReadStream>>(),
+        token, buffers, transfer_all()));
 
 /// Start an asynchronous operation to read a certain amount of data from a
 /// stream.
@@ -880,19 +891,21 @@ async_read(AsyncReadStream& s, const MutableBufferSequence& buffers,
 template <typename AsyncReadStream,
     typename MutableBufferSequence, typename CompletionCondition,
     ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
-      std::size_t)) ReadToken
-        ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
-          typename AsyncReadStream::executor_type)>
-ASIO_INITFN_AUTO_RESULT_TYPE(ReadToken,
-    void (asio::error_code, std::size_t))
-async_read(AsyncReadStream& s, const MutableBufferSequence& buffers,
+      std::size_t)) ReadToken = default_completion_token_t<
+        typename AsyncReadStream::executor_type>>
+auto async_read(AsyncReadStream& s, const MutableBufferSequence& buffers,
     CompletionCondition completion_condition,
-    ASIO_MOVE_ARG(ReadToken) token
-      ASIO_DEFAULT_COMPLETION_TOKEN(
-        typename AsyncReadStream::executor_type),
-    typename constraint<
+    ReadToken&& token = default_completion_token_t<
+      typename AsyncReadStream::executor_type>(),
+    constraint_t<
       is_mutable_buffer_sequence<MutableBufferSequence>::value
-    >::type = 0);
+    > = 0)
+  -> decltype(
+    async_initiate<ReadToken,
+      void (asio::error_code, std::size_t)>(
+        declval<detail::initiate_async_read<AsyncReadStream>>(),
+        token, buffers,
+        static_cast<CompletionCondition&&>(completion_condition)));
 
 #if !defined(ASIO_NO_DYNAMIC_BUFFER_V1)
 
@@ -964,22 +977,22 @@ async_read(AsyncReadStream& s, const MutableBufferSequence& buffers,
  */
 template <typename AsyncReadStream, typename DynamicBuffer_v1,
     ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
-      std::size_t)) ReadToken
-        ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
-          typename AsyncReadStream::executor_type)>
-ASIO_INITFN_AUTO_RESULT_TYPE(ReadToken,
-    void (asio::error_code, std::size_t))
-async_read(AsyncReadStream& s,
-    ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
-    ASIO_MOVE_ARG(ReadToken) token
-      ASIO_DEFAULT_COMPLETION_TOKEN(
-        typename AsyncReadStream::executor_type),
-    typename constraint<
-      is_dynamic_buffer_v1<typename decay<DynamicBuffer_v1>::type>::value
-    >::type = 0,
-    typename constraint<
-      !is_dynamic_buffer_v2<typename decay<DynamicBuffer_v1>::type>::value
-    >::type = 0);
+      std::size_t)) ReadToken = default_completion_token_t<
+        typename AsyncReadStream::executor_type>>
+auto async_read(AsyncReadStream& s, DynamicBuffer_v1&& buffers,
+    ReadToken&& token = default_completion_token_t<
+      typename AsyncReadStream::executor_type>(),
+    constraint_t<
+      is_dynamic_buffer_v1<decay_t<DynamicBuffer_v1>>::value
+    > = 0,
+    constraint_t<
+      !is_dynamic_buffer_v2<decay_t<DynamicBuffer_v1>>::value
+    > = 0)
+  -> decltype(
+    async_initiate<ReadToken,
+      void (asio::error_code, std::size_t)>(
+        declval<detail::initiate_async_read_dynbuf_v1<AsyncReadStream>>(),
+        token, static_cast<DynamicBuffer_v1&&>(buffers), transfer_all()));
 
 /// Start an asynchronous operation to read a certain amount of data from a
 /// stream.
@@ -1058,23 +1071,24 @@ async_read(AsyncReadStream& s,
 template <typename AsyncReadStream,
     typename DynamicBuffer_v1, typename CompletionCondition,
     ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
-      std::size_t)) ReadToken
-        ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
-          typename AsyncReadStream::executor_type)>
-ASIO_INITFN_AUTO_RESULT_TYPE(ReadToken,
-    void (asio::error_code, std::size_t))
-async_read(AsyncReadStream& s,
-    ASIO_MOVE_ARG(DynamicBuffer_v1) buffers,
+      std::size_t)) ReadToken = default_completion_token_t<
+        typename AsyncReadStream::executor_type>>
+auto async_read(AsyncReadStream& s, DynamicBuffer_v1&& buffers,
     CompletionCondition completion_condition,
-    ASIO_MOVE_ARG(ReadToken) token
-      ASIO_DEFAULT_COMPLETION_TOKEN(
-        typename AsyncReadStream::executor_type),
-    typename constraint<
-      is_dynamic_buffer_v1<typename decay<DynamicBuffer_v1>::type>::value
-    >::type = 0,
-    typename constraint<
-      !is_dynamic_buffer_v2<typename decay<DynamicBuffer_v1>::type>::value
-    >::type = 0);
+    ReadToken&& token = default_completion_token_t<
+      typename AsyncReadStream::executor_type>(),
+    constraint_t<
+      is_dynamic_buffer_v1<decay_t<DynamicBuffer_v1>>::value
+    > = 0,
+    constraint_t<
+      !is_dynamic_buffer_v2<decay_t<DynamicBuffer_v1>>::value
+    > = 0)
+  -> decltype(
+    async_initiate<ReadToken,
+      void (asio::error_code, std::size_t)>(
+        declval<detail::initiate_async_read_dynbuf_v1<AsyncReadStream>>(),
+        token, static_cast<DynamicBuffer_v1&&>(buffers),
+        static_cast<CompletionCondition&&>(completion_condition)));
 
 #if !defined(ASIO_NO_EXTENSIONS)
 #if !defined(ASIO_NO_IOSTREAM)
@@ -1145,15 +1159,16 @@ async_read(AsyncReadStream& s,
  */
 template <typename AsyncReadStream, typename Allocator,
     ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
-      std::size_t)) ReadToken
-        ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
-          typename AsyncReadStream::executor_type)>
-ASIO_INITFN_AUTO_RESULT_TYPE(ReadToken,
-    void (asio::error_code, std::size_t))
-async_read(AsyncReadStream& s, basic_streambuf<Allocator>& b,
-    ASIO_MOVE_ARG(ReadToken) token
-      ASIO_DEFAULT_COMPLETION_TOKEN(
-        typename AsyncReadStream::executor_type));
+      std::size_t)) ReadToken = default_completion_token_t<
+        typename AsyncReadStream::executor_type>>
+auto async_read(AsyncReadStream& s, basic_streambuf<Allocator>& b,
+    ReadToken&& token = default_completion_token_t<
+      typename AsyncReadStream::executor_type>())
+  -> decltype(
+    async_initiate<ReadToken,
+      void (asio::error_code, std::size_t)>(
+        declval<detail::initiate_async_read_dynbuf_v1<AsyncReadStream>>(),
+        token, basic_streambuf_ref<Allocator>(b), transfer_all()));
 
 /// Start an asynchronous operation to read a certain amount of data from a
 /// stream.
@@ -1230,16 +1245,18 @@ async_read(AsyncReadStream& s, basic_streambuf<Allocator>& b,
 template <typename AsyncReadStream,
     typename Allocator, typename CompletionCondition,
     ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
-      std::size_t)) ReadToken
-        ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
-          typename AsyncReadStream::executor_type)>
-ASIO_INITFN_AUTO_RESULT_TYPE(ReadToken,
-    void (asio::error_code, std::size_t))
-async_read(AsyncReadStream& s, basic_streambuf<Allocator>& b,
+      std::size_t)) ReadToken = default_completion_token_t<
+        typename AsyncReadStream::executor_type>>
+auto async_read(AsyncReadStream& s, basic_streambuf<Allocator>& b,
     CompletionCondition completion_condition,
-    ASIO_MOVE_ARG(ReadToken) token
-      ASIO_DEFAULT_COMPLETION_TOKEN(
-        typename AsyncReadStream::executor_type));
+    ReadToken&& token = default_completion_token_t<
+      typename AsyncReadStream::executor_type>())
+  -> decltype(
+    async_initiate<ReadToken,
+      void (asio::error_code, std::size_t)>(
+        declval<detail::initiate_async_read_dynbuf_v1<AsyncReadStream>>(),
+        token, basic_streambuf_ref<Allocator>(b),
+        static_cast<CompletionCondition&&>(completion_condition)));
 
 #endif // !defined(ASIO_NO_IOSTREAM)
 #endif // !defined(ASIO_NO_EXTENSIONS)
@@ -1313,18 +1330,19 @@ async_read(AsyncReadStream& s, basic_streambuf<Allocator>& b,
  */
 template <typename AsyncReadStream, typename DynamicBuffer_v2,
     ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
-      std::size_t)) ReadToken
-        ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
-          typename AsyncReadStream::executor_type)>
-ASIO_INITFN_AUTO_RESULT_TYPE(ReadToken,
-    void (asio::error_code, std::size_t))
-async_read(AsyncReadStream& s, DynamicBuffer_v2 buffers,
-    ASIO_MOVE_ARG(ReadToken) token
-      ASIO_DEFAULT_COMPLETION_TOKEN(
-        typename AsyncReadStream::executor_type),
-    typename constraint<
+      std::size_t)) ReadToken = default_completion_token_t<
+        typename AsyncReadStream::executor_type>>
+auto async_read(AsyncReadStream& s, DynamicBuffer_v2 buffers,
+    ReadToken&& token = default_completion_token_t<
+      typename AsyncReadStream::executor_type>(),
+    constraint_t<
       is_dynamic_buffer_v2<DynamicBuffer_v2>::value
-    >::type = 0);
+    > = 0)
+  -> decltype(
+    async_initiate<ReadToken,
+      void (asio::error_code, std::size_t)>(
+        declval<detail::initiate_async_read_dynbuf_v2<AsyncReadStream>>(),
+        token, static_cast<DynamicBuffer_v2&&>(buffers), transfer_all()));
 
 /// Start an asynchronous operation to read a certain amount of data from a
 /// stream.
@@ -1403,19 +1421,21 @@ async_read(AsyncReadStream& s, DynamicBuffer_v2 buffers,
 template <typename AsyncReadStream,
     typename DynamicBuffer_v2, typename CompletionCondition,
     ASIO_COMPLETION_TOKEN_FOR(void (asio::error_code,
-      std::size_t)) ReadToken
-        ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
-          typename AsyncReadStream::executor_type)>
-ASIO_INITFN_AUTO_RESULT_TYPE(ReadToken,
-    void (asio::error_code, std::size_t))
-async_read(AsyncReadStream& s, DynamicBuffer_v2 buffers,
+      std::size_t)) ReadToken = default_completion_token_t<
+        typename AsyncReadStream::executor_type>>
+auto async_read(AsyncReadStream& s, DynamicBuffer_v2 buffers,
     CompletionCondition completion_condition,
-    ASIO_MOVE_ARG(ReadToken) token
-      ASIO_DEFAULT_COMPLETION_TOKEN(
-        typename AsyncReadStream::executor_type),
-    typename constraint<
+    ReadToken&& token = default_completion_token_t<
+      typename AsyncReadStream::executor_type>(),
+    constraint_t<
       is_dynamic_buffer_v2<DynamicBuffer_v2>::value
-    >::type = 0);
+    > = 0)
+  -> decltype(
+    async_initiate<ReadToken,
+      void (asio::error_code, std::size_t)>(
+        declval<detail::initiate_async_read_dynbuf_v2<AsyncReadStream>>(),
+        token, static_cast<DynamicBuffer_v2&&>(buffers),
+        static_cast<CompletionCondition&&>(completion_condition)));
 
 /*@}*/
 
