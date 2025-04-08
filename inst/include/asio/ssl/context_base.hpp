@@ -135,7 +135,7 @@ public:
   /// Disable compression. Compression is disabled by default.
   static const long no_compression = implementation_defined;
 #else
-  ASIO_STATIC_CONSTANT(long, default_workarounds = SSL_OP_ALL);
+  static const unsigned long default_workarounds = SSL_OP_ALL;
   ASIO_STATIC_CONSTANT(long, single_dh_use = SSL_OP_SINGLE_DH_USE);
   ASIO_STATIC_CONSTANT(long, no_sslv2 = SSL_OP_NO_SSLv2);
   ASIO_STATIC_CONSTANT(long, no_sslv3 = SSL_OP_NO_SSLv3);
